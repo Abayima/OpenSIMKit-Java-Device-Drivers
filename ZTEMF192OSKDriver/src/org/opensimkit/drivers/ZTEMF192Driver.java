@@ -114,7 +114,16 @@ public class ZTEMF192Driver implements DriverInterface {
         // Store messages in array
         processMessages(messagesToProcess);
         
-        return messagesToProcess;
+        numMessages = messages.size();
+        String messagesString = "";
+        
+        for(int messageLoop = 0; messageLoop < numMessages; messageLoop ++)
+        {
+            messagesString = messagesString.concat(messages.get(messageLoop));
+            messagesString = messagesString.concat("\n" + delimiter + "\n");
+        }
+        
+        return messagesString;
     }
 
     @Override
