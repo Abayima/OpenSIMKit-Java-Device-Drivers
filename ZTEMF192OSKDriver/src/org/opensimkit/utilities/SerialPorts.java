@@ -484,6 +484,16 @@ public class SerialPorts {
         
         return true;
     }
+    
+    public boolean clearAllMessages()
+    {
+        String response = runCommand(CMD_DELETE_ALL_MESSAGES);
+        
+        if(response.trim().equals("OK"))
+            return true;
+        
+        return false;
+    }
 
     /**
      * getSerialPortList()
@@ -504,6 +514,12 @@ public class SerialPorts {
     public boolean isConnected() {
         return connected;
     }
+    
+    /**
+     * Gets the port name
+     * 
+     * @return Port name
+     */
     
     public String getPortName() {
         return serialPort.getName();
