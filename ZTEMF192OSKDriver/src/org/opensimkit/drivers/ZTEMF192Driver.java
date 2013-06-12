@@ -172,4 +172,14 @@ public class ZTEMF192Driver implements DriverInterface {
     public boolean isDeviceConnected() {
         return serialPorts.isConnected();
     }
+
+    @Override
+    public String getPortName() {
+        if(!isDeviceConnected())
+        {
+            throw new DriverException("Device is not connected");
+        }
+        
+        return serialPorts.getPortName();
+    }
 }

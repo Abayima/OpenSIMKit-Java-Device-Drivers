@@ -504,4 +504,8 @@ public class SerialPorts {
     public boolean isConnected() {
         return connected;
     }
+    
+    public String getPortName() {
+        return serialPort.getName();
+    }
 }
