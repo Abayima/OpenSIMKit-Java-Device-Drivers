@@ -6,7 +6,7 @@ package org.opensimkit.drivers;
 
 import java.util.ArrayList;
 import net.xeoh.plugins.base.annotations.PluginImplementation;
-import org.opensimkit.utilities.SerialPorts;
+import org.opensimkit.utilities.ZTESerialPorts;
 
 /**
  *
@@ -19,13 +19,13 @@ public class ZTEMF192Driver implements DriverInterface {
     private ArrayList<String> messages;
     private final String delimiter = "<<.END.>>";
     
-    private SerialPorts serialPorts;
+    private ZTESerialPorts serialPorts;
     
     // Contructor
     
     public ZTEMF192Driver()
     {
-        serialPorts = new SerialPorts();
+        serialPorts = new ZTESerialPorts();
         messages = new ArrayList<String>();
     }
     
@@ -120,7 +120,10 @@ public class ZTEMF192Driver implements DriverInterface {
         for(int messageLoop = 0; messageLoop < numMessages; messageLoop ++)
         {
             messagesString = messagesString.concat(messages.get(messageLoop));
-            messagesString = messagesString.concat("\n" + delimiter + "\n");
+            
+            // Dont delimit the end message
+            if(messageLoop < (numMessages - 1))
+                messagesString = messagesString.concat("\n" + delimiter + "\n");
         }
         
         return messagesString;

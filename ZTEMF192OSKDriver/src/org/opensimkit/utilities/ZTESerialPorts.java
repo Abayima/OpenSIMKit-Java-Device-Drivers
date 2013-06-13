@@ -26,7 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import purejavacomm.SerialPortEventListener;
 
-public class SerialPorts {
+public class ZTESerialPorts {
     private ArrayList<CommPortIdentifier> serialPorts;
     private ArrayList<String> serialPortList;
     private SerialPort serialPort;
@@ -61,7 +61,7 @@ public class SerialPorts {
      * Constructor
      */
     
-    public SerialPorts()
+    public ZTESerialPorts()
     {
         serialPortList = new ArrayList<String>();
         serialPorts = new ArrayList<CommPortIdentifier>();
@@ -211,7 +211,7 @@ public class SerialPorts {
             
             serialPort.setSerialPortParams(speedValue, dataBitValue, stopBitValue, parityValue);
         } catch (UnsupportedCommOperationException ex) {
-            Logger.getLogger(SerialPorts.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ZTESerialPorts.class.getName()).log(Level.SEVERE, null, ex);
             
             return false;
         }
@@ -239,7 +239,7 @@ public class SerialPorts {
                             SerialPort.STOPBITS_1, 
                             SerialPort.PARITY_NONE);
                     
-                    serialPort.addEventListener((SerialPortEventListener)new SerialPortListener());
+                    serialPort.addEventListener((SerialPortEventListener)new ZTESerialPortListener());
                     serialPort.notifyOnDataAvailable(true);
                     serialPort.notifyOnOutputEmpty(true);
                     
@@ -253,24 +253,24 @@ public class SerialPorts {
                     setMemSIMCard();
                 } catch (UnsupportedCommOperationException ex) {
                     connected = false;
-                    Logger.getLogger(SerialPorts.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ZTESerialPorts.class.getName()).log(Level.SEVERE, null, ex);
                     
                     return false;
                 } catch (TooManyListenersException ex) {
                     connected = false;
-                    Logger.getLogger(SerialPorts.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ZTESerialPorts.class.getName()).log(Level.SEVERE, null, ex);
                     
                     return false;
                     
                 } catch (IOException ex) {
                     connected = false;
-                    Logger.getLogger(SerialPorts.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ZTESerialPorts.class.getName()).log(Level.SEVERE, null, ex);
                     
                     return false;
                 }
             } catch (PortInUseException ex) {
                 connected = false;
-                Logger.getLogger(SerialPorts.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ZTESerialPorts.class.getName()).log(Level.SEVERE, null, ex);
 
                 return false;
             }
@@ -291,9 +291,7 @@ public class SerialPorts {
      */
     
     public boolean disconnectPort()
-    {
-        // TODO: Investigate why an exception occurs when closing the port
-        
+    {   
         if(connected) {
             new Thread(){
                 @Override
@@ -304,7 +302,7 @@ public class SerialPorts {
                         serialPort.getOutputStream().close();
                     }
                     catch(IOException ex) {
-                        Logger.getLogger(SerialPorts.class.getName()).log(Level.SEVERE, null, ex);
+                        Logger.getLogger(ZTESerialPorts.class.getName()).log(Level.SEVERE, null, ex);
                     }
                     
                     serialPort.removeEventListener();
@@ -312,6 +310,8 @@ public class SerialPorts {
                 }
             }.start();
         }
+        
+        connected = false;
         
         return true;
     }
@@ -326,7 +326,7 @@ public class SerialPorts {
                 output.concat("\r\n" + readLine);
             }
         } catch (IOException ex) {
-            Logger.getLogger(SerialPorts.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ZTESerialPorts.class.getName()).log(Level.SEVERE, null, ex);
             
             return null;
         }
@@ -391,7 +391,7 @@ public class SerialPorts {
                 return null;
             }  
         } catch (InterruptedException ex) {
-            Logger.getLogger(SerialPorts.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ZTESerialPorts.class.getName()).log(Level.SEVERE, null, ex);
             
             return null;
         }

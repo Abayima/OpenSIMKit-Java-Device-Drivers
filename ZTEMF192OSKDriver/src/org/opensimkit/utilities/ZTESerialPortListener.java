@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  *
  * @author ahmedmaawy
  */
-public class SerialPortListener implements SerialPortEventListener {
+public class ZTESerialPortListener implements SerialPortEventListener {
 
     SerialPort serialPort;
     
@@ -29,7 +29,7 @@ public class SerialPortListener implements SerialPortEventListener {
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(port.getInputStream()));
         } catch (IOException ex) {
-            Logger.getLogger(SerialPortListener.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ZTESerialPortListener.class.getName()).log(Level.SEVERE, null, ex);
             
             return;
         }
@@ -53,11 +53,11 @@ public class SerialPortListener implements SerialPortEventListener {
                             stop = true;
                     }
                     
-                    SerialPorts.setSerialPortReturnValue(output);
+                    ZTESerialPorts.setSerialPortReturnValue(output);
                     
                     bufferedReader.close();
                 } catch (IOException ex) {
-                    Logger.getLogger(SerialPortListener.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ZTESerialPortListener.class.getName()).log(Level.SEVERE, null, ex);
                 }
                 
                 break;
