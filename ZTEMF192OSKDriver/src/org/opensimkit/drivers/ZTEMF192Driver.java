@@ -33,6 +33,8 @@ public class ZTEMF192Driver implements DriverInterface {
     
     private void processMessages(String textToProcess)
     {
+        messages.clear();
+        
         String [] splitString = textToProcess.split("\n");
         int numElements = splitString.length;
         
